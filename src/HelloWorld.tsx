@@ -38,7 +38,7 @@ export const HelloWorld: React.FC<z.infer<typeof myCompSchema>> = () => {
 	console.log(endStart, "end");
 
 	// gray Box Left
-	const heightBigger = spring({ frame, from: 200, to: 800, fps: fps, delay: startMove });
+	const heightBigger = spring({ frame, from: 200, to: 1000, fps: fps, delay: startMove });
 	const moveToLeft = spring({ frame, from: 260, to: 50, fps: fps, delay: startMove });
 	const widthSmaller = interpolate(frame, [start, startMove, endStart], [200, 100, 30], {
 		extrapolateRight: 'clamp',
@@ -47,21 +47,40 @@ export const HelloWorld: React.FC<z.infer<typeof myCompSchema>> = () => {
 
 // MiddleBox 
 const widthMiddleSpring = spring({ frame, from: 0, to: 600, fps: fps, delay: endStart });
-const middleBoxHeight = spring({ frame, from: 300, to: 800, fps: fps, delay: end });
-const middleBoxHeightUp = spring({ frame, from: 0, to: -100, fps: fps, delay: end });
+const middleBoxHeight = spring({ frame, from: 300, to: 1000, fps: fps, delay: end });
+const middleBoxHeightUp = spring({ frame, from: 0, to: -25, fps: fps, delay: end });
 
 
 // Image
-	const imageHeight = spring({ frame, from: 0, to: 700, fps: fps, delay: endStart + 3 }
-		);
+	const imageHeight = spring({ frame, from: 0, to: 700, fps: fps, delay: endStart + 3 });
+
+	const overflowUp = interpolate(frame, [50,80],[100,0],{
+		extrapolateRight: 'clamp',
+		extrapolateLeft: 'clamp',
+	});
+
+	const overflowUpTwo = interpolate(frame, [60,90],[100,0],{
+		extrapolateRight: 'clamp',
+		extrapolateLeft: 'clamp',
+	});
+
+	const scaling = spring ({ frame, from: 1, to: 0.85, fps: fps, delay: 90 });
 
 	return (
 		<AbsoluteFill style={{
 			backgroundColor: 'orange',
-			display: 'flex',
-			justifyContent: 'center'
+			
 		}}>
 
+<div style={{
+	width:'100%',
+	height:'100%',
+	display: 'flex',
+	justifyContent: 'center',
+	position: 'absolute',
+	flexDirection: 'column',
+	transform: `scale(${scaling})`
+}}>
 			<Img style={{
 				width: 500, zIndex: 1,
 				height: imageHeight,
@@ -74,12 +93,11 @@ const middleBoxHeightUp = spring({ frame, from: 0, to: -100, fps: fps, delay: en
 				fontSize: 30, background: 'grey',
 				width: widthSmaller,
 				position: 'absolute',
-				transform: `translate(${moveToLeft}px, -100px)`,
+				transform: `translate(${moveToLeft}px, -25px)`,
 				height: heightBigger,
 				writingMode: 'horizontal-tb',
 				zIndex: 1
 			}}>
-				dnasjdnjkasbdkjb
 			</div>
 
 			<div style={{
@@ -90,8 +108,44 @@ const middleBoxHeightUp = spring({ frame, from: 0, to: -100, fps: fps, delay: en
 				width: widthMiddleSpring,
 				background: 'green',
 				boxShadow: '10px 15px 65px black',
-			}} />
+			}} >
 
+				<div style={{
+			position: 'absolute',
+			bottom: 110,
+			width: '100%',
+			height: 70,
+			overflow: 'clip'
+			}}> 
+
+				<span style={{position: "absolute", 
+			bottom: 0,
+			fontSize: 50,
+			marginLeft: 40,
+			transform: `translateY(${overflowUp}px)`
+		}}>
+				Hello World</span>
+				</div>
+
+				<div style={{
+			position: 'absolute',
+			bottom: 40,
+			width: '100%',
+			height: 70,
+			overflow: 'clip'
+			}}> 
+
+				<span style={{position: "absolute", 
+			bottom: 0,
+			fontSize: 50,
+			marginLeft: 40,
+			transform: `translateY(${overflowUpTwo}px)`
+		}}>
+				Hjsldfkj lskjdfl</span>
+				</div>
+			</div>
+
+			</div>
 
 
 		</AbsoluteFill >
